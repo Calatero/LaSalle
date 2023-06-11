@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gráfico de Campana de Gauss</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+  <div id="graph"></div>
+
+  <script>
+    // Función para calcular el valor de la Campana de Gauss para un valor x dado
+    function calculateGaussian(x, mean, stdDev) {
+      const coefficient = 1 / (stdDev * Math.sqrt(2 * Math.PI));
+      const exponent = -Math.pow((x - mean), 2) / (2 * Math.pow(stdDev, 2));
+      return coefficient * Math.exp(exponent);
+    }
+
+    // Crear un array de valores x
+    const xValues = [];
+    for (let x = 1; x <= 6; x += 0.1) {
+      xValues.push(x);
+    }
+
+    // Calcular los valores de la Campana de Gauss para cada valor x
+    const yValues = xValues.map(x => calculateGaussian(x, 3.5, 1));
+
+    // Crear un objeto de datos para el gráfico
+    const data = [{
+      x: xValues,
+      y: yValues,
+      type: 'scatter',
+      mode: 'lines',
+      line: { shape: 'spline' }
+    }];
+
+    // Configuración del diseño del gráfico
+    const layout = {
+      title: 'Campana de Gauss',
+      xaxis: { title: 'Valor x' },
+      yaxis: { title: 'Probabilidad' }
+    };
+
+    // Dibujar el gráfico utilizando Plotly
+    Plotly.newPlot('graph', data, layout);
+  </script>
+</body>
+</html>
